@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "TwinStickProjectile.h"
 #include "GameFramework/Character.h"
 #include "TwinStickPawn.generated.h"
 
@@ -10,6 +11,10 @@ UCLASS(Blueprintable)
 class ATwinStickPawn : public APawn
 {
 	GENERATED_BODY()
+
+	/* The bullet */
+	UPROPERTY(Category = Mesh, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	class TSubclassOf<ATwinStickProjectile> Bullet;
 
 	/* The mesh component */
 	UPROPERTY(Category = Mesh, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
