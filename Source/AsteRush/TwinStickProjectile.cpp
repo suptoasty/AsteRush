@@ -18,6 +18,7 @@ ATwinStickProjectile::ATwinStickProjectile()
 	ProjectileMesh->SetupAttachment(RootComponent);
 	ProjectileMesh->BodyInstance.SetCollisionProfileName("Projectile");
 	ProjectileMesh->OnComponentHit.AddDynamic(this, &ATwinStickProjectile::OnHit);		// set up a notification for when this component hits something
+	ProjectileMesh->ComponentTags.Add(FName("bullet"));
 	RootComponent = ProjectileMesh;
 
 	// Use a ProjectileMovementComponent to govern this projectile's movement
@@ -28,9 +29,12 @@ ATwinStickProjectile::ATwinStickProjectile()
 	ProjectileMovement->bRotationFollowsVelocity = true;
 	ProjectileMovement->bShouldBounce = false;
 	ProjectileMovement->ProjectileGravityScale = 0.f; // No gravity
+	ProjectileMovement->ComponentTags.Add(FName("bullet"));
 
 	// Die after 3 seconds by default
 	InitialLifeSpan = 3.0f;
+
+	Tags.Add(FName("bullet"));
 }
 
 void ATwinStickProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)

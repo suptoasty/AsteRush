@@ -59,6 +59,17 @@ public:
 	static const FName FireForwardBinding;
 	static const FName FireRightBinding;
 
+	// UPROPERTY(EditAnywhere,Category="Projectile")
+	// TSubclassOf<ATwinStickProjectile> ProjectileBP;
+
+	// /*Delay after the Blueprint of the UsefulActor will get spawned*/
+	// UPROPERTY(EditDefaultsOnly, Category = "ActorSpawning")
+	// float TimeToSpawn = 2.f;
+	
+	// /*Spawns the UsefulActor Blueprint*/
+	// UFUNCTION()
+	// void SpawnUsefulActor(UWorld* World, FVector FireLocation, FRotator FireRotation);
+
 private:
 
 	/* Flag to control firing  */
