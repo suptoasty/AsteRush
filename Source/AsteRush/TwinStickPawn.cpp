@@ -20,13 +20,6 @@ const FName ATwinStickPawn::FireRightBinding("FireRight");
 
 ATwinStickPawn::ATwinStickPawn()
 {	
-	// set default pawn class to our Blueprinted character
-	static ConstructorHelpers::FObjectFinder<UBlueprint> PlayerBulletBPClass(TEXT("/Game/Blueprints/Bullet.Bullet"));
-	if (PlayerBulletBPClass.Object != NULL)
-	{
-		Bullet = (UClass*)PlayerBulletBPClass.Object->GeneratedClass;
-	}
-
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> ShipMesh(TEXT("/Game/TwinStick/Meshes/TwinStickUFO.TwinStickUFO"));
 	// Create the mesh component
 	ShipMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ShipMesh"));
@@ -122,7 +115,7 @@ void ATwinStickPawn::FireShot(FVector FireDirection)
 			if (World != NULL)
 			{
 				// spawn the projectile
-				World->SpawnActor<ATwinStickProjectile>(Bullet, SpawnLocation, FireRotation);
+				World->SpawnActor<ATwinStickProjectile>(SpawnLocation, FireRotation);
 				// World->SpawnActor<>(SpawnLocation, FireRotation);
 				// World->SpawnActor<ATwinStickProjectile>(ProjectileBP, SpawnLocation, FireRotation);
 				// SpawnUsefulActor(World, SpawnLocation, FireRotation);
