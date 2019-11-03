@@ -123,9 +123,6 @@ void ATwinStickPawn::FireShot(FVector FireDirection)
 			{
 				// spawn the projectile
 				World->SpawnActor<ATwinStickProjectile>(Bullet, SpawnLocation, FireRotation);
-				// World->SpawnActor<>(SpawnLocation, FireRotation);
-				// World->SpawnActor<ATwinStickProjectile>(ProjectileBP, SpawnLocation, FireRotation);
-				// SpawnUsefulActor(World, SpawnLocation, FireRotation);
 			}
 
 			bCanFire = false;
@@ -141,14 +138,6 @@ void ATwinStickPawn::FireShot(FVector FireDirection)
 		}
 	}
 }
-
-// void ATwinStickPawn::SpawnUsefulActor(UWorld* World, FVector FireLocation, FRotator FireRotation) {
-// 	if(ProjectileBP) {
-// 		FActorSpawnParameters spawnParams;
-
-// 		ATwinStickProjectile *ActorRef = World->SpawnActor<ATwinStickProjectile>(ProjectileBP, FireLocation, FireRotation);
-// 	}
-// }
 
 void ATwinStickPawn::ShotTimerExpired()
 {
