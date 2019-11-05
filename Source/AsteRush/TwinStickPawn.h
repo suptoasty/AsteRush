@@ -51,8 +51,12 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	// End Actor Interface
+	
+	UFUNCTION(Server, Reliable, WithValidation)
+	void MoveOnInput(float DeltaSeconds, float ForwardValue, float RightValue);
 
 	/* Fire a shot in the specified direction */
+	UFUNCTION(Server, Reliable, WithValidation)
 	void FireShot(FVector FireDirection);
 
 	/* Handler for the fire timer expiry */

@@ -76,6 +76,20 @@ void ATwinStickPawn::Tick(float DeltaSeconds)
 	const float ForwardValue = GetInputAxisValue(MoveForwardBinding);
 	const float RightValue = GetInputAxisValue(MoveRightBinding);
 
+	// Move on inputs
+	MoveOnInput(DeltaSeconds, ForwardValue, RightValue);
+
+	// Create fire direction vector
+	const float FireForwardValue = GetInputAxisValue(FireForwardBinding);
+	const float FireRightValue = GetInputAxisValue(FireRightBinding);
+	const FVector FireDirection = FVector(FireForwardValue, FireRightValue, 0.f);
+
+	// Try and fire a shot
+	FireShot(FireDirection);
+}
+
+void ATwinStickPawn::MoveOnInput_Implementation(float DeltaSeconds, float ForwardValue, float RightValue)
+{
 	// Clamp max size so that (X=1, Y=1) doesn't cause faster movement in diagonal directions
 	const FVector MoveDirection = FVector(ForwardValue, RightValue, 0.f).GetClampedToMaxSize(1.0f);
 
@@ -88,7 +102,7 @@ void ATwinStickPawn::Tick(float DeltaSeconds)
 		const FRotator NewRotation = Movement.Rotation();
 		FHitResult Hit(1.f);
 		RootComponent->MoveComponent(Movement, NewRotation, true, &Hit);
-		
+
 		if (Hit.IsValidBlockingHit())
 		{
 			const FVector Normal2D = Hit.Normal.GetSafeNormal2D();
@@ -96,17 +110,14 @@ void ATwinStickPawn::Tick(float DeltaSeconds)
 			RootComponent->MoveComponent(Deflection, NewRotation, true);
 		}
 	}
-	
-	// Create fire direction vector
-	const float FireForwardValue = GetInputAxisValue(FireForwardBinding);
-	const float FireRightValue = GetInputAxisValue(FireRightBinding);
-	const FVector FireDirection = FVector(FireForwardValue, FireRightValue, 0.f);
-
-	// Try and fire a shot
-	FireShot(FireDirection);
 }
 
-void ATwinStickPawn::FireShot(FVector FireDirection)
+bool ATwinStickPawn::MoveOnInput_Validate(float DeltaSeconds, float ForwardValue, float RightValue)
+{
+	return true;
+}
+
+void ATwinStickPawn::FireShot_Implementation(FVector FireDirection)
 {
 	// If it's ok to fire again
 	if (bCanFire == true)
@@ -137,6 +148,12 @@ void ATwinStickPawn::FireShot(FVector FireDirection)
 			bCanFire = false;
 		}
 	}
+}
+
+bool ATwinStickPawn::FireShot_Validate(FVector FireDirection)
+{
+	// Optionally validate the request and return false if the function should not be run.
+	return true;
 }
 
 void ATwinStickPawn::ShotTimerExpired()
